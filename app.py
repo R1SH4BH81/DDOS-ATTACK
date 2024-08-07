@@ -4,7 +4,7 @@ import random
 import json
 import urllib.parse
 from concurrent.futures import ThreadPoolExecutor
-import os,threading
+import threading
 
 successful_requests = 0
 
@@ -30,7 +30,7 @@ def encode_payload(payload):
     base64_encoded_str = base64.b64encode(url_encoded_str.encode('utf-8')).decode('utf-8')
     return base64_encoded_str
 
-def send_request(session):
+def send_request(session, url):
     global successful_requests
     headers = {
         'accept': '*/*',
@@ -55,7 +55,7 @@ def send_request(session):
         'data': encoded_data,
     }
 
-    response = session.post('https://', headers=headers, data=data) #Enter Own URL
+    response = session.post(url, headers=headers, data=data)
     response_code = response.status_code
     if response_code == 200:
         with threading.Lock():
@@ -64,13 +64,14 @@ def send_request(session):
     else:
         print(f"Request failed. Response: {response_code}")
 
-def threads(num_threads):
+def threads(num_threads, url):
     with ThreadPoolExecutor(max_workers=num_threads) as executor:
         with requests.Session() as session:
-            futures = [executor.submit(send_request, session) for _ in range(num_threads)]
+            futures = [executor.submit(send_request, session, url) for _ in range(num_threads)]
             for future in futures:
                 future.result()
 
-num_threads = 99999999999999999999999
-
-threads(num_threads)
+if __name__ == "__main__":
+    url = input("Enter the desired URL: ")  # Ask the user for the desired URL
+    num_threads = 1000  # Set a more reasonable number of threads to avoid system overload
+    threads(num_threads, url)
