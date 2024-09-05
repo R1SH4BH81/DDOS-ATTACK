@@ -30,7 +30,8 @@ def generate_random_username():
 def generate_random_mobile():
     return f"98{random.randint(10000000, 99999999)}"
 ```
-## Payload Creation: The generated data is packed into a dictionary and converted to a JSON string. It is then URL-encoded and Base64-encoded for secure transmission.
+## Payload Creation: 
+The generated data is packed into a dictionary and converted to a JSON string. It is then URL-encoded and Base64-encoded for secure transmission.
 
 ```bash
 def create_payload():
@@ -43,7 +44,8 @@ def create_payload():
     }
     return payload
 ```
-## Request Sending: Each request is sent with custom headers and the encoded payload. If the request is successful (HTTP 200), the counter of successful requests is incremented.
+## Request Sending: 
+Each request is sent with custom headers and the encoded payload. If the request is successful (HTTP 200), the counter of successful requests is incremented.
 
 ```bash
 def send_request(session, url):
@@ -65,7 +67,8 @@ def send_request(session, url):
     else:
         print(f"Request failed. Response: {response.status_code}")
 ```
-## Multithreading: The script uses ThreadPoolExecutor to send multiple requests concurrently.
+## Multithreading: 
+The script uses ThreadPoolExecutor to send multiple requests concurrently.
 
 
 ```bash
@@ -91,7 +94,7 @@ Run the script:
 
 ```bash
 
-python scam_request_simulator.py
+python app.py
 ```
 Enter the target URL when prompted. The script will automatically send 1000 requests concurrently to the URL.
 
