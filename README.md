@@ -72,7 +72,6 @@ The script uses ThreadPoolExecutor to send multiple requests concurrently.
 
 
 ```bash
-
 def threads(num_threads, url):
     with ThreadPoolExecutor(max_workers=num_threads) as executor:
         with requests.Session() as session:
